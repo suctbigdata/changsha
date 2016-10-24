@@ -1,0 +1,38 @@
+option = {
+    title : {
+        text: '长沙地区',
+        subtext: '来源长沙统计局'
+    },
+
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:[===legend===]
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'category',
+            data : [===xdata===]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value'
+        }
+    ],
+    series : [
+        ===ydata===
+    ]
+};
