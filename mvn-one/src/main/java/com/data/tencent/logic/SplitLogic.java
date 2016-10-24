@@ -10,7 +10,7 @@ import java.util.Map;
 public class SplitLogic implements Logic {
 
     /**
-     * 将投资数据 切分
+     * 将全部数据切分为一个一个数据段
      * @param strs
      */
     public void splitMulSymbol(String[] strs){
@@ -29,6 +29,11 @@ public class SplitLogic implements Logic {
         }
     }
 
+    /**
+     * 将已经切分的数据转为key-value
+     * @param info
+     * @return
+     */
     public Map getKeyInfo(String info){
 
 
