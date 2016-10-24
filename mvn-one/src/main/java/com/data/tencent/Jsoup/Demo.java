@@ -52,7 +52,7 @@ public class Demo {
             System.out.println(linkHref+","+linkText);
             copyTofile("------------------------------");
             copyTofile(linkHref+","+linkText +"\n");
-//            readStatics(linkHref);
+            readStatics(linkHref);
         }
 
     }

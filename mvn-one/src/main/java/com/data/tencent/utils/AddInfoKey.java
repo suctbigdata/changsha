@@ -5,5 +5,7 @@ package com.data.tencent.utils;
  */
 public class AddInfoKey {
 
-    public void add(String index,String info){}
+    public void add(String index,String info){
+
+    }
 }

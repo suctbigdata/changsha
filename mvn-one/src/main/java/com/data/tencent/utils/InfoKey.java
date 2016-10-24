@@ -5,7 +5,8 @@ package com.data.tencent.utils;
  */
 public enum InfoKey {
 
-    gudingtouzi(1,"全社会固定资产投资"),
+    gudingtouziall(1,"全社会固定资产投资"),
+    gudingtouzi(6,"固定资产投资"),
     fangdictouzi(2,"房地产开发投资"),
     chengzhentouzi(3,"城镇以上固定资产投资"),
     gengxingaiztouzi(4,"更新改造投资"),
@@ -16,8 +17,10 @@ public enum InfoKey {
 
     shangpingfzengzhang(22,"商品房销售面积增长"),
     zhuzhaixszengzhang(23,"住宅销售额增长"),
-    zenzhang(21,"增长");
+    zenzhang(21,"增长"),
 
+    shangpingfxiajiang(31,"商品房销售面积下降"),
+    zhuzhaixiajiang(32,"住宅销售额下降");
 
 
     private int index;

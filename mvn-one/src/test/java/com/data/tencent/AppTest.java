@@ -47,11 +47,13 @@ public class  AppTest
     public void testLine() {
         String line = "完成固定资产投资406.01亿元，同比增长4.2%，增幅回落 21.3个百分点。技改投资112.79亿元，增长2.1%，房地产开发投资132.49亿元，下降12.0%。商品房销售面积127.04万平方米，下降28.4%；住宅销售额61.82亿元，下降29.9%。";
 //        dealString(line);
+
     }
 
     public void testRegix() {
         String s = "s558.1zxv-85w558kkk -1!@2";
-        for (String ss : s.split("[^-?0-9.]")) {
+        String line = "完成固定资产投资406.01亿元，同比增长4.2%，增幅回落 21.3个百分点。技改投资112.79亿元，增长2.1%，房地产开发投资132.49亿元，下降12.0%。商品房销售面积127.04万平方米，下降28.4%；住宅销售额61.82亿元，下降29.9%。";
+        for (String ss : line.split("[^-?0-9.]")) {
             if (!ss.equals("")) {
                 System.out.println(ss);
 //                d[i++]=Double.valueOf(ss);
