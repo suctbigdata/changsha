@@ -2,7 +2,6 @@ package com.data.tencent.servies.impl;
 
 import com.data.tencent.servies.DealService;
 import com.data.tencent.utils.Constant;
-import com.sun.deploy.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;

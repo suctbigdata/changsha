@@ -10,7 +10,7 @@ import org.junit.Test;
  *
  * @author <Authors name>
  * @version 1.0
- * @since <pre>ʮ�� 24, 2016</pre>
+ * @since <pre>2016</pre>
  */
 public class SplitLogicTest {
 
