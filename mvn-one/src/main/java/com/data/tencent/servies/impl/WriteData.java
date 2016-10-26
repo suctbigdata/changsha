@@ -6,9 +6,6 @@ import com.data.tencent.utils.Constant;
 import java.io.*;
 import java.util.Date;
 
-import static com.data.tencent.utils.Constant.NEWDATA;
-import static com.data.tencent.utils.Constant.XDATA;
-import static com.data.tencent.utils.Constant.YDATA;
 
 /**
  * Created by Administrator on 2016/10/23.
@@ -37,12 +34,12 @@ public class WriteData extends ExportService {
 
             str = str.replaceAll(Constant.TITLE,
                     title);
-            str = str.replaceAll(XDATA,
+            str = str.replaceAll(Constant.XDATA,
                     xdata);
-            str = str.replaceAll(YDATA,
+            str = str.replaceAll(Constant.YDATA,
                     ydata);//替换掉模块中相应的地方
 
-            File f = new File(NEWDATA);
+            File f = new File(Constant.NEWDATA);
             BufferedWriter o = new BufferedWriter(new FileWriter(f));
             o.write(str);
             o.close();
@@ -61,9 +58,9 @@ public class WriteData extends ExportService {
     }
 
     public void WriteData(String data,String file) throws IOException {
-        File f = new File(NEWDATA);
-        BufferedWriter o = new BufferedWriter(new FileWriter(file));
-        o.write(data);
+        File f = new File(file);
+        BufferedWriter o = new BufferedWriter(new FileWriter(f,true));
+        o.write(data+"\n");
         o.close();
     }
 }

@@ -1,5 +1,8 @@
 package com.data.tencent;
 
+import com.data.tencent.Jsoup.Demo;
+import com.data.tencent.servies.impl.WriteData;
+import com.data.tencent.utils.Constant;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -43,6 +46,35 @@ public class  AppTest
     }
 
 
+    public void testWriteF(){
+        String file = Constant.INITINFO;
+        try {
+            WriteData w = new WriteData();
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
+            w.WriteData("---------------===========-------",file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void testString(){
+        String la = "/static/ydkb/20150324/28178.html";
+        System.out.println(la.substring(la.lastIndexOf("/")-6,la.lastIndexOf("/")));
+    }
+
+    public void testGet(){
+        try {
+            new Demo().readStatics("/static/ydkb/20150617/28912.html",Constant.LOADFILE+"150617.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void testLine() {
         String line = "完成固定资产投资406.01亿元，同比增长4.2%，增幅回落 21.3个百分点。技改投资112.79亿元，增长2.1%，房地产开发投资132.49亿元，下降12.0%。商品房销售面积127.04万平方米，下降28.4%；住宅销售额61.82亿元，下降29.9%。";

@@ -6,11 +6,12 @@ package com.data.tencent.utils;
 public class Constant {
 
 
-    public final static String CONFJ2 = "E:\\project\\local\\mvnTe\\modelParent\\mvn-one\\src\\main\\resources\\echarts.conf.j2";
-    public final static String NEWDATA = "E:\\project\\local\\mvnTe\\modelParent\\mvn-one\\src\\main\\resources\\echart.txt";
+    public final static String LOADFILE = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\data\\";
+    public final static String CONFJ2 = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\echarts.conf.j2";
+    public final static String NEWDATA = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\echart.txt";
 
 
-    public final static String INITINFO = "E:\\project\\local\\mvnTe\\modelParent\\mvn-one\\src\\main\\resources\\initInfo.txt";
+    public final static String INITINFO = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\initInfo.txt";
 
     public final static String TITLE = "===legend===";
     public final static String XDATA = "===xdata===";
@@ -27,7 +28,7 @@ public class Constant {
     public final static String page3 = "http://www.cstj.gov.cn/ydkb/index_3.jhtml";
     public final static String page4 = "http://www.cstj.gov.cn/ydkb/index_4.jhtml";
 
-    public final static String symbol = "\\,|\\，|\\。|\\;|\\；";
+    public final static String symbol = "\\ |\\,|\\，|\\。|\\;|\\；";
 
 }
 

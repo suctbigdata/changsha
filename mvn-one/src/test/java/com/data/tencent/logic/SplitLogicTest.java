@@ -1,6 +1,7 @@
 package com.data.tencent.logic;
 
 import com.data.tencent.utils.Constant;
+import com.data.tencent.utils.NumberUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,14 +36,16 @@ public class SplitLogicTest {
         String[] strs = {str0, str1, str2};
         SplitLogic sl = new SplitLogic();
         for (String str : strs) {
-            String[] info_ = str.split(" ");
-            for (String index : info_) {
-                index = index.trim();
-                if (!"".equals(index)) {
-                    for (String info : index.split(Constant.symbol)) {
-                        System.out.println(info);
-                        sl.getKeyInfo(sl.removeMo(info));
-                    }
+            String[] info = str.split(Constant.symbol);
+            for (int i=0;i<info.length;i++) {
+                info[i] = info[i].trim();
+                if(!NumberUtils.isContainDouble(info[i])){
+                    continue;
+                }
+                if (!"".equals(info[i])) {
+                  System.out.println("==========="+info[i]);
+                    String key = sl.removeMo(info[i]);
+                    System.out.println(sl.getKeyInfo(key));
                 }
             }
             System.out.println("---------------------");
@@ -50,6 +53,10 @@ public class SplitLogicTest {
 
     }
 
+    @Test
+    public void testPl(){
 
+        System.out.println(NumberUtils.isContainDouble("城镇以上固定资产投资亿元"));
+    }
 
 }

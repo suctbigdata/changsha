@@ -41,57 +41,23 @@ public class SplitLogic implements Logic {
 //        List<String> list = new ArrayList<String>();
 //        List<Map<String,String>> list = new ArrayList<HashMap<String,String>>;
 
-        if(info.contains(InfoKey.gudingtouzi.getInfo())){
-            return InfoKey.gudingtouzi.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-        else if(info.contains(InfoKey.fangdictouzi.getInfo())){
-            return InfoKey.fangdictouzi.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-        else if(info.contains(InfoKey.chengzhentouzi.getInfo())){
-            return InfoKey.chengzhentouzi.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-        else if(info.contains(InfoKey.gengxingaiztouzi.getInfo())){
-            return InfoKey.gengxingaiztouzi.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-        else if(info.contains(InfoKey.jigaitouzi.getInfo())){
-            return InfoKey.jigaitouzi.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
+        for(InfoKey infoKey:InfoKey.values()){
+            if(info.contains(infoKey.getInfo())){
+                return infoKey.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
+            }
         }
 
-        else if(info.contains(InfoKey.shangpingfxiaoshou.getInfo())){
-            return InfoKey.shangpingfxiaoshou.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-        else if(info.contains(InfoKey.zhuzhaixiaoshou.getInfo())){
-            return InfoKey.zhuzhaixiaoshou.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"";
-        }
-
-        else if(info.contains(InfoKey.shangpingfzengzhang.getInfo())){
-            return InfoKey.shangpingfzengzhang.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"%";
-        }
-        else if(info.contains(InfoKey.zhuzhaixszengzhang.getInfo())){
-            return InfoKey.zhuzhaixszengzhang.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"%";
-        }
-
-        else if(info.contains(InfoKey.shangpingfxiajiang.getInfo())){
-            return InfoKey.shangpingfxiajiang.getInfo()+":-"+ NumberUtils.getFirstDouble(info)+"%";
-        }
-        else if(info.contains(InfoKey.zhuzhaixiajiang.getInfo())){
-            return InfoKey.zhuzhaixiajiang.getInfo()+":-"+ NumberUtils.getFirstDouble(info)+"%";
-        }
-
-        else if(info.contains(InfoKey.zenzhang.getInfo())){
-            return InfoKey.zenzhang.getInfo()+":"+ NumberUtils.getFirstDouble(info)+"%";
-        }
-        else{
-            System.out.println("error:"+info);
-        }
+        System.out.println("error:"+info);
 
         return "";
     }
 
     public String removeMo(String str){
         if(str.contains("月")){
-
-            return str.substring(str.indexOf("月"+1),str.length());
+            int begin = str.indexOf("月")+1;
+            int end = str.length();
+//            System.out.println(begin+","+end);
+            return str.substring(begin,end);
         }else{
             return str;
         }
