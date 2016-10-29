@@ -9,7 +9,7 @@ public class Constant {
     public final static String LOADFILE = "E:\\project\\github\\changsha\\mvn-one\\src\\data\\";
     public final static String CONFJ2 = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\echarts.conf.j2";
     public final static String NEWDATA = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\echart.txt";
-
+    public final static String SELFJS = "E:\\project\\github\\changsha\\model-dist\\binary\\webapp\\dist\\self.js";
 
     public final static String INITINFO = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources\\initInfo.txt";
 

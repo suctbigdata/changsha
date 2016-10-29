@@ -50,11 +50,11 @@ public class SonThread  {
             }
             return file.substring(0,4) + "-"+ month;
         }else {
-            month = file.substring(file.indexOf("-"), file.indexOf("月"));
+            month = file.substring(file.indexOf("-")+1, file.indexOf("月"));
             if(month.length() == 1){
                 month = "0"+month;
             }
-            return file.substring(0, 4) + month;
+            return file.substring(0, 4) + "-" + month;
         }
     }
 

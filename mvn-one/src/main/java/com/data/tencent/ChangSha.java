@@ -65,6 +65,7 @@ public class ChangSha {
         logger.info("showtitle = " + StringFormater.formaterTitle(showTitle));
         String[] outStr = {StringFormater.formaterTitle(showTitle),StringFormater.formaterTime(xdata),out};
         exportService.export(outStr);
+        exportService.writeTojs();
 
     }
 
