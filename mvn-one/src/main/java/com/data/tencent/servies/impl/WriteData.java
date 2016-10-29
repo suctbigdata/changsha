@@ -1,7 +1,11 @@
 package com.data.tencent.servies.impl;
 
+import com.data.tencent.ChangSha;
 import com.data.tencent.servies.ExportService;
 import com.data.tencent.utils.Constant;
+import com.data.tencent.utils.FileOption;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
 import java.util.Date;
@@ -12,20 +16,23 @@ import java.util.Date;
  */
 public class WriteData extends ExportService {
 
+    private static Log logger = LogFactory.getLog(WriteData.class);
+    
     public boolean writeToFile(String title,String xdata,String ydata) {
 
-        System.out.println(title);
-        System.out.println(xdata);
-        System.out.println(ydata);
+        logger.info("分类标题："+title);
+        logger.info("时间刻度："+xdata);
+        logger.info("数值："+ydata);
         String str = "";
         long beginDate = (new Date()).getTime();
         try {
             String tempStr = "";
-            FileInputStream is = new FileInputStream(Constant.CONFJ2);//读取模块文件
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            FileInputStream fis = new FileInputStream(Constant.CONFJ2); //读取模块文件
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis, "UTF-8"));
+
             while ((tempStr = br.readLine()) != null)
                 str = str + tempStr;
-            is.close();
+            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -39,11 +46,8 @@ public class WriteData extends ExportService {
             str = str.replaceAll(Constant.YDATA,
                     ydata);//替换掉模块中相应的地方
 
-            File f = new File(Constant.NEWDATA);
-            BufferedWriter o = new BufferedWriter(new FileWriter(f));
-            o.write(str);
-            o.close();
-            System.out.println("共用时：" + ((new Date()).getTime() - beginDate) + "ms");
+            FileOption.WriteData(str,Constant.NEWDATA,true);
+            logger.info("共用时：" + ((new Date()).getTime() - beginDate) + "ms");
         } catch (IOException e) {
             e.printStackTrace();
             return false;
@@ -57,10 +61,4 @@ public class WriteData extends ExportService {
         writeToFile(data[0],data[1],data[2]);
     }
 
-    public void WriteData(String data,String file) throws IOException {
-        File f = new File(file);
-        BufferedWriter o = new BufferedWriter(new FileWriter(f,true));
-        o.write(data+"\n");
-        o.close();
-    }
 }

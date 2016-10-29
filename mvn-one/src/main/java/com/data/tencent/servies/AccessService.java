@@ -1,5 +1,7 @@
 package com.data.tencent.servies;
 
+import com.data.tencent.pojo.OrgData;
+
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  */
 public class AccessService implements Service {
 
-    public List<String[]> loadData(String path){
+    public List<OrgData> loadData(String path) throws Exception {
         return null;
     }
 
@@ -15,4 +17,7 @@ public class AccessService implements Service {
         return "";
     }
 
+    public String getXdata() {
+        return "";
+    }
 }

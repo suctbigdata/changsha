@@ -48,19 +48,7 @@ public class  AppTest
 
     public void testWriteF(){
         String file = Constant.INITINFO;
-        try {
-            WriteData w = new WriteData();
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("/static/ydkb/20150324/28178.html,2014年1-12月经济运行快报",file);
-            w.WriteData("---------------===========-------",file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void testString(){
@@ -69,16 +57,15 @@ public class  AppTest
     }
 
     public void testGet(){
-        try {
-            new Demo().readStatics("/static/ydkb/20150617/28912.html",Constant.LOADFILE+"150617.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void testLine() {
         String line = "完成固定资产投资406.01亿元，同比增长4.2%，增幅回落 21.3个百分点。技改投资112.79亿元，增长2.1%，房地产开发投资132.49亿元，下降12.0%。商品房销售面积127.04万平方米，下降28.4%；住宅销售额61.82亿元，下降29.9%。";
 //        dealString(line);
+        String la = "2015年1-11月长沙经济运行快报";
+        String time = la.substring(0,4) + la.substring(la.indexOf("-"),la.indexOf("月"));
+        System.out.println(time);
 
     }
 

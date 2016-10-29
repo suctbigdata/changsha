@@ -1,49 +1,81 @@
 package com.data.tencent.Jsoup;
 
-import com.data.tencent.servies.impl.WriteData;
+
+import com.data.tencent.thread.*;
 import com.data.tencent.utils.Constant;
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
+import com.data.tencent.utils.FileOption;
+import com.data.tencent.utils.HtmlContentUtil;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2016/10/23.
  */
 public class Demo {
 
+    private static Log logger = LogFactory.getLog(Demo.class);
+
     public static void main(String[] args) {
-        System.out.println("");
+        logger.info("");
         try {
             Demo demo = new Demo();
-            demo.indexInfo(Constant.page1);
-//            demo.indexInfo(Constant.page2);
-//            demo.indexInfo(Constant.page3);
-//            demo.indexInfo(Constant.page4);
+            demo.pageTree(Constant.page1);
+            logger.info("------------------------------------------------------------------------");
+            TimeUnit.SECONDS.sleep(1);
+            demo.pageTree(Constant.page2);
+            logger.info("------------------------------------------------------------------------");
+            TimeUnit.SECONDS.sleep(1);
+            demo.pageTree(Constant.page3);
+            logger.info("------------------------------------------------------------------------");
+            TimeUnit.SECONDS.sleep(1);
+            demo.pageTree(Constant.page4);
+            logger.info("------------------------------------------------------------------------");
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private WriteData writeData;
+
 
     public Demo() {
-        writeData = new WriteData();
+
     }
 
-    public void indexInfo(String page) throws IOException {
-        System.out.println(page);
-        Document doc = Jsoup.parse(getHtmlContent(page));
+    public void pageTree(String page) throws IOException {
+        logger.info(page);
+        Document doc = Jsoup.parse(HtmlContentUtil.getHtmlContent(page));
+        Element body = doc.select("div.c1-body").first();
+        // 找出定义了 class=masthead 的元素
+        Elements contents = body.select("div.c1-bline");
+        int pa = 0;
+        for (Element content : contents) {
+            Element link = content.select("div").select("a").get(1);
+            String linkHref = link.attr("href");
+            String linkText = link.text();
+            logger.info((pa++) + "-------"+linkHref + "-------------" + linkText);
+
+            copyTofile("------------------------------",true);
+            copyTofile(linkHref + "," + linkText + "\n",true);
+
+            new SonThread(linkHref,linkText,page).execute();
+        }
+    }
 
 
+    public void pageTreetype1(String page) throws IOException {
+        logger.info(page);
+        Document doc = Jsoup.parse(HtmlContentUtil.getHtmlContent(page));
         Element body = doc.select("div.c1-body").first();
         // 找出定义了 class=masthead 的元素
         Elements contents = body.select("div.c1-bline");
@@ -51,141 +83,24 @@ public class Demo {
             Element link = content.select("div").select("a").get(1);
             String linkHref = link.attr("href");
             String linkText = link.text();
-            System.out.println("-------------------------");
-            System.out.println(linkHref + "," + linkText);
-            copyTofile("------------------------------");
-            copyTofile(linkHref + "," + linkText + "\n");
+            logger.info(linkHref + "," + linkText);
+            copyTofile("------------------------------",true);
+            copyTofile(linkHref + "," + linkText + "\n",true);
 
-            new Thread(new SonThread(linkHref)).start();
-        }
-
-    }
-
-    class SonThread extends Thread{
-
-        private String url;
-        private String file;
-        public SonThread(String url){
-            this.setName(url.substring(url.lastIndexOf("/")-6,url.lastIndexOf("/")));
-            this.file = Constant.LOADFILE +  url.substring(url.lastIndexOf("/")-6,url.lastIndexOf("/"))+".txt";
-            this.url = url;
-        }
-        @Override
-        public void run() {
-            try {
-                readStatics(Constant.PageURL+url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        private void readStatics(String url) throws IOException {
-            String connect = Constant.PageURL + url;
-            System.out.println(connect);
-
-            Document doc = Jsoup.parse(getHtmlContent(connect));
-
-            Elements body_ = doc.select("div.content");
-            // 找出定义了 class=masthead 的元素
-            Elements contents_ = body_.select("div");
-
-            for (Element content_ : contents_) {
-                Elements links = content_.select("div");
-                for (int i = 1; i < links.size(); i++) {
-
-                    String info_ = "";
-                    for (Element info : links.get(i).select("b")) {
-                        info_ += info.text();
-                    }
-
-                    System.out.println(info_ + "\n=====" + links.get(i).text());
-                    copyTofile(info_ + "\n=====" + links.get(i).text(),file);
-                }
-
-            }
+            new SonThreadType1(linkHref,linkText).execute();
         }
     }
 
-    public void readStatics(String url,String file) throws IOException {
-        String connect = Constant.PageURL + url;
-        System.out.println(connect);
-        Document doc = Jsoup.parse(getHtmlContent(connect));
 
-        Elements body_ = doc.select("div.content");
-        // 找出定义了 class=masthead 的元素
-        Elements contents_ = body_.select("div");
 
-        for (Element content_ : contents_) {
-            Elements links = content_.select("div");
-            for (int i = 1; i < links.size(); i++) {
-
-                String info_ = "";
-                for (Element info : links.get(i).select("b")) {
-                    info_ += info.text();
-                }
-
-                System.out.println(info_ + "\n=====" + links.get(i).text());
-                copyTofile(info_ + "\n=====" + links.get(i).text(),file);
-            }
-
-        }
-    }
-
-    public void copyTofile(String data) {
+    public void copyTofile(String data,boolean append) {
         String file = Constant.INITINFO;
         try {
-            writeData.WriteData(data, file);
+            FileOption.WriteData(data, file,append);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void copyTofile(String data,String file) {
-//        String file = Constant.INITINFO;
-        try {
-            writeData.WriteData(data, file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
-    public String getHtmlContent(String url) {
-
-        // Create an instance of HttpClient.
-        HttpClient client = new HttpClient();
-
-        // Create a method instance.
-        GetMethod method = new GetMethod(url);
-
-        // Provide custom retry handler is necessary
-        method.getParams().setParameter(HttpMethodParams.RETRY_HANDLER,
-                new DefaultHttpMethodRetryHandler(3, false));
-
-        try {
-            // Execute the method.
-            int statusCode = client.executeMethod(method);
-
-            if (statusCode != HttpStatus.SC_OK) {
-                System.err.println("Method failed: " + method.getStatusLine());
-            }
-
-            // Read the response body.
-            byte[] responseBody = method.getResponseBody();
-
-            return new String(responseBody);
-        } catch (HttpException e) {
-            System.err.println("Fatal protocol violation: " + e.getMessage());
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.err.println("Fatal transport error: " + e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // Release the connection.
-            method.releaseConnection();
-            method = null;
-            client = null;
-        }
-
-        return null;
-    }
 }

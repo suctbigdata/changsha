@@ -7,5 +7,7 @@ public interface Dao {
 
     public String[] loadData(String fileName);
 
+    public String loadMatchData(String fileName);
+
 }
 
