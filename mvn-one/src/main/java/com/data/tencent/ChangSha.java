@@ -1,6 +1,5 @@
 package com.data.tencent;
 
-import com.data.tencent.Jsoup.Demo;
 import com.data.tencent.pojo.OrgData;
 import com.data.tencent.pojo.ShowData;
 import com.data.tencent.servies.AccessService;
@@ -11,13 +10,10 @@ import com.data.tencent.servies.impl.StaticsLoad;
 import com.data.tencent.servies.impl.WriteData;
 import com.data.tencent.utils.Constant;
 import com.data.tencent.utils.StringFormater;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.io.File;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 /**

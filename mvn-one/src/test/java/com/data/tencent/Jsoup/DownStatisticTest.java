@@ -15,13 +15,13 @@ import org.junit.After;
 import java.io.IOException;
 
 /** 
-* Demo Tester. 
+* DownStatistic Tester.
 * 
 * @author <Authors name> 
 * @since <pre>ʮ�� 24, 2016</pre> 
 * @version 1.0 
 */ 
-public class DemoTest { 
+public class DownStatisticTest {
 
 @Before
 public void before() throws Exception { 

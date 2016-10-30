@@ -1,7 +1,5 @@
 package com.data.tencent;
 
-import com.data.tencent.Jsoup.Demo;
-import com.data.tencent.servies.impl.WriteData;
 import com.data.tencent.utils.Constant;
 import com.data.tencent.utils.FileOption;
 import com.data.tencent.utils.TitleFormater;
@@ -10,12 +8,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Unit test for simple App.

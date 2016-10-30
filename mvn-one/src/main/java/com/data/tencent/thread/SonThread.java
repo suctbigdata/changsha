@@ -1,6 +1,5 @@
 package com.data.tencent.thread;
 
-import com.data.tencent.Jsoup.Demo;
 import com.data.tencent.utils.Constant;
 import com.data.tencent.utils.FileOption;
 import com.data.tencent.utils.HtmlContentUtil;

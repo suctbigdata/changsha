@@ -1,4 +1,4 @@
-package com.data.tencent.Jsoup;
+package com.data.tencent;
 
 
 import com.data.tencent.thread.*;
@@ -13,21 +13,20 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Administrator on 2016/10/23.
  */
-public class Demo {
+public class DownStatistic {
 
-    private static Log logger = LogFactory.getLog(Demo.class);
+    private static Log logger = LogFactory.getLog(DownStatistic.class);
 
     public static void main(String[] args) {
         logger.info("");
         try {
-            Demo demo = new Demo();
+            DownStatistic demo = new DownStatistic();
             demo.pageTree(Constant.page1);
             logger.info("------------------------------------------------------------------------");
             TimeUnit.SECONDS.sleep(1);
@@ -49,7 +48,7 @@ public class Demo {
 
 
 
-    public Demo() {
+    public DownStatistic() {
 
     }
 
