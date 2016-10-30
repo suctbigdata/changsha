@@ -30,7 +30,7 @@ public class ExportService implements Service {
                 str = str + tempStr;
             fis.close();
 
-            FileOption.WriteData(str,toFile,true);
+            FileOption.WriteData(str,toFile,false);
         } catch (IOException e) {
             e.printStackTrace();
 

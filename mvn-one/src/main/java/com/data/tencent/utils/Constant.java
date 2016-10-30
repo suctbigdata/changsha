@@ -16,6 +16,7 @@ public class Constant {
     public final static String TITLE = "===legend===";
     public final static String XDATA = "===xdata===";
     public final static String YDATA = "===ydata===";
+    public final static String SELECT = "===selected===";
 
 
     public final static String Readkey = "固定资产投资";

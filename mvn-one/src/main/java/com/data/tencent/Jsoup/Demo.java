@@ -13,6 +13,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -94,6 +95,8 @@ public class Demo {
 
 
     public void copyTofile(String data,boolean append) {
+//        System.out.println("rootpath:" +System.getProperty("java.class.path"));
+//        System.out.println("rootPath: " + (new File("")).getAbsolutePath());
         String file = Constant.INITINFO;
         try {
             FileOption.WriteData(data, file,append);

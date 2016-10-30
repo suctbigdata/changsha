@@ -102,7 +102,7 @@ public class SonThread  {
             }
         }
         if(!StringUtils.isEmpty(info_.trim())){
-            saveSonPageContent(info_ ,file,true);
+            saveSonPageContent(info_ ,file,false);
         }
 
     }

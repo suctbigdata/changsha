@@ -6,9 +6,9 @@ package com.data.tencent.utils;
 public enum InfoKey {
 
     gudingtouziall(1,"全社会固定资产投资",Constant.menu),
+    chengzhentouzi(3,"城镇以上固定资产投资",Constant.menu),
     gudingtouzi(6,"固定资产投资",Constant.menu),
     fangdictouzi(2,"房地产开发投资",Constant.menu),
-    chengzhentouzi(3,"城镇以上固定资产投资",Constant.menu),
     gengxingaiztouzi(4,"更新改造投资",Constant.menu),
     jigaitouzi(5,"技改投资",Constant.menu),
 

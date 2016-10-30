@@ -11,6 +11,7 @@
     <modules>
         <module>mvn-one</module>
         <module>mvn-two</module>
+        <module>model-dist</module>
     </modules>
 
 

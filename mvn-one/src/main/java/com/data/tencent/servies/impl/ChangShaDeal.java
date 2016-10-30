@@ -7,6 +7,8 @@ import com.data.tencent.pojo.ShowData;
 import com.data.tencent.servies.DealService;
 import com.data.tencent.utils.Constant;
 import com.data.tencent.utils.NumberUtils;
+import com.data.tencent.utils.StringFormater;
+import com.data.tencent.utils.TitleFormater;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,7 +51,7 @@ public class ChangShaDeal extends DealService {
                         // item 数据 转 showData 三维
 //                        logger.info("一个item 数据：" + itemData);
                         ShowData showData = item2show(orgData.getDate(), itemData);
-                        logger.info("一个show 数据：" + showData);
+//                        logger.info("一个show 数据：" + showData);
                         showDataList.add(showData);
                     }
                 }
@@ -90,7 +92,7 @@ public class ChangShaDeal extends DealService {
 
     @Override
     public String showData(String xdata, Set<String> showname_set, List<ShowData> showDataList) {
-        return formaterShowData(dealData(xdata, showname_set, showDataList));
+        return formaterShowData(dealDataTileFormat(xdata, showDataList));
     }
 
     @Override
@@ -130,6 +132,59 @@ public class ChangShaDeal extends DealService {
         for (ShowData showData : showDataList) {
             tmp_result[title_.get(showData.getShowName())][time_.get(showData.getdate())] = showData.getValues();
         }
+        for(int jj=0;jj<j;jj++){
+            String type = titleArray[jj];
+            String value = "";
+            for(int ii=0;ii<i;ii++){
+                value += (StringUtils.isEmpty(tmp_result[jj][ii])?"0":tmp_result[jj][ii] )+",";
+            }
+            result.put(type,value);
+        }
+
+        return result;
+    }
+
+    /**
+     * 获取每个分类，在每个时间刻度的数据
+     *
+     */
+    private Map<String, String> dealDataTileFormat(String xdata, List<ShowData> showDataList) {
+
+        Map<String, String> result = new HashMap<>();
+        Map<String,Integer> title_  = new HashMap<>();
+        Map<String,Integer> time_ = new HashMap<>();
+
+        int i = 0;
+        for(String x_:xdata.split("\\,")){
+            time_.put(x_,i++);
+        }
+        int j = 0;
+        String[] titleArray = StringFormater.getTitleFormaterArray();
+        for(String t_:titleArray){
+            title_.put(t_,j++);
+        }
+
+        logger.info("初始化一个 数组 大小是" + j +"*"+i);
+        String[][] tmp_result = new String[j][i];
+
+
+        for (ShowData showData : showDataList) {
+            if(!StringUtils.isEmpty(showData.getValues())) {
+                // 非空添加到数据
+                String realTitle = "";
+                if(!StringUtils.isEmpty(realTitle = StringFormater.titleFormaterMatch(showData.getShowName()))){
+                    if(!StringUtils.isEmpty(tmp_result[title_.get(realTitle)][time_.get(showData.getdate())])){
+                        logger.error("覆盖了一个非零数据 原title " + showData.getShowName());
+                        logger.error("原来数据:" + realTitle + "," + showData.getdate() +"," + tmp_result[title_.get(realTitle)][time_.get(showData.getdate())]);
+                        logger.error("新数据:" + realTitle + "," + showData.getdate() +"," + showData.getValues());
+                    }
+                    tmp_result[title_.get(realTitle)][time_.get(showData.getdate())] = showData.getValues();
+                }else{
+                    logger.error("有一个没有匹配的数据 ：" + showData );
+                }
+            }
+        }
+        // 将数组中是数据 按照title 类型组合
         for(int jj=0;jj<j;jj++){
             String type = titleArray[jj];
             String value = "";

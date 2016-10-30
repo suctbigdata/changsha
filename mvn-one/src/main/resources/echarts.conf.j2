@@ -1,20 +1,28 @@
 var option_self = {
-    title : {
-        text: '长沙地区',
-        subtext: '来源长沙统计局'
-    },
-
     tooltip : {
         trigger: 'axis'
     },
-    legend: {
-        data:[===legend===]
-    },
+        legend: {
+           orient: 'horizontal',
+           x: 'right',
+           y: 'top',
+           backgroundColor: '#eee',
+           borderColor: 'rgba(178,34,34,0.8)',
+           borderWidth: 4,
+           padding: 10,
+           itemGap: 20,
+           textStyle: {color: 'red'},
+           selected: {
+               ===selected===
+           },
+             data:[===legend===]
+        },
     toolbox: {
+        orient: 'horizontal',
+            x: 'right',
+            y: 'bottom',
         show : true,
         feature : {
-            mark : {show: true},
-            dataView : {show: true, readOnly: false},
             magicType : {show: true, type: ['line', 'bar']},
             restore : {show: true},
             saveAsImage : {show: true}

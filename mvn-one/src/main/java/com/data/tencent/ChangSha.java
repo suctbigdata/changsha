@@ -60,10 +60,11 @@ public class ChangSha {
             throw new Exception("数据为空");
         }
 
-        String showTitle = StringUtils.join(showname_set,",");
+//        String showTitle = StringUtils.join(showname_set,",");
         logger.info("xdata = "+ StringFormater.formaterTime(xdata));
-        logger.info("showtitle = " + StringFormater.formaterTitle(showTitle));
-        String[] outStr = {StringFormater.formaterTitle(showTitle),StringFormater.formaterTime(xdata),out};
+        logger.info("showtitle = " + StringFormater.titleFormater());
+        String selectFalse = StringFormater.selectFalse();
+        String[] outStr = {StringFormater.titleFormater(),StringFormater.formaterTime(xdata),out,selectFalse};
         exportService.export(outStr);
         exportService.writeTojs();
 

@@ -18,7 +18,7 @@ public class WriteData extends ExportService {
 
     private static Log logger = LogFactory.getLog(WriteData.class);
     
-    public boolean writeToFile(String title,String xdata,String ydata) {
+    public boolean writeToFile(String title,String xdata,String ydata,String selectFalse) {
 
         logger.info("分类标题："+title);
         logger.info("时间刻度："+xdata);
@@ -45,8 +45,9 @@ public class WriteData extends ExportService {
                     xdata);
             str = str.replaceAll(Constant.YDATA,
                     ydata);//替换掉模块中相应的地方
-
-            FileOption.WriteData(str,Constant.NEWDATA,true);
+            str = str.replaceAll(Constant.SELECT,
+                    selectFalse);
+            FileOption.WriteData(str,Constant.NEWDATA,false);
             logger.info("共用时：" + ((new Date()).getTime() - beginDate) + "ms");
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,7 +59,7 @@ public class WriteData extends ExportService {
     @Override
     public void export(String[] data) {
 
-        writeToFile(data[0],data[1],data[2]);
+        writeToFile(data[0],data[1],data[2],data[3]);
     }
 
 }
