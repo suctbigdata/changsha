@@ -73,26 +73,6 @@ public class DownStatistic {
     }
 
 
-    public void pageTreetype1(String page) throws IOException {
-        logger.info(page);
-        Document doc = Jsoup.parse(HtmlContentUtil.getHtmlContent(page));
-        Element body = doc.select("div.c1-body").first();
-        // 找出定义了 class=masthead 的元素
-        Elements contents = body.select("div.c1-bline");
-        for (Element content : contents) {
-            Element link = content.select("div").select("a").get(1);
-            String linkHref = link.attr("href");
-            String linkText = link.text();
-            logger.info(linkHref + "," + linkText);
-            copyTofile("------------------------------",true);
-            copyTofile(linkHref + "," + linkText + "\n",true);
-
-            new SonThreadType1(linkHref,linkText).execute();
-        }
-    }
-
-
-
     public void copyTofile(String data,boolean append) {
 //        System.out.println("rootpath:" +System.getProperty("java.class.path"));
 //        System.out.println("rootPath: " + (new File("")).getAbsolutePath());
