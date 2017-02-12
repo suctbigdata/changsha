@@ -34,9 +34,16 @@ public class ChangShaDeal extends DealService {
 
         List<ShowData> showDataList = new ArrayList<>();
 
-        for (Object object : list) {
-            OrgData orgData = (OrgData) object;
+        Map<String,String> lastVal = new HashMap<>();
 
+        int limit =0;
+        for (Object object : list) {
+//            limit ++;
+//            if(limit > 3) break;
+            // 遍历每月情况
+            logger.info("-------------------------------------");
+            OrgData orgData = (OrgData) object;
+            int index = 0;
             String[] info = orgData.getData().split(Constant.symbol);
             for (int i = 0; i < info.length; i++) {
                 info[i] = info[i].trim();
@@ -46,12 +53,44 @@ public class ChangShaDeal extends DealService {
                 if (!"".equals(info[i])) {
                     String key = sl.removeMo(info[i]);
                     // 根据字符特征 将数据转为 itemData 对象
+
                     ItemData itemData = sl.getKeyInfoAndSObject(key);
                     if (itemData != null) {
                         // item 数据 转 showData 三维
-//                        logger.info("一个item 数据：" + itemData);
-                        ShowData showData = item2show(orgData.getDate(), itemData);
+                        logger.info("一个item 数据：" + itemData);
+                        ShowData showData = null;
+                           // item2show(orgData.getDate(), itemData);;
 //                        logger.info("一个show 数据：" + showData);
+
+                        if(itemData.getType()==1){
+                            //将月份的累积数据转成单月数据
+                            if(orgData.getDate().contains("-02") || lastVal.size() == 0){
+                                // 1-2月数据  或最新数据数据
+                                showData = item2show(orgData.getDate(), itemData);
+//                                lastVal = new String[5];
+                                lastVal.put(itemData.getKey(), showData.getValues());
+                                // 每年第一个月 除以二
+                                showData.setValues(""+Float.parseFloat(showData.getValues())/2);
+                            }else{
+                                // 然后每个月 都是当月累积减去前一月累积
+                                showData = item2show(orgData.getDate(), itemData);
+                                String tmp = showData.getValues();
+                                String tmp_str = lastVal.get(itemData.getKey())==null?"0":lastVal.get(itemData.getKey());
+                                logger.info(Float.parseFloat(tmp)+"-"
+                                        +Float.parseFloat(tmp_str)+"="
+                                        + (Float.parseFloat(tmp)-Float.parseFloat(tmp_str)));
+
+                                showData.setValues((Float.parseFloat(tmp)-Float.parseFloat(tmp_str))+"");
+                                lastVal.put(itemData.getKey(), tmp);
+
+
+                            }
+
+                            logger.info("---------------一个show 数据：" + showData);
+                        }else{
+                            // 增长情况不用考虑逐增情况
+                            showData = item2show(orgData.getDate(), itemData);
+                        }
                         showDataList.add(showData);
                     }
                 }
@@ -64,6 +103,7 @@ public class ChangShaDeal extends DealService {
     Set<String> showName_set = new TreeSet<>();
 
     private String showName = "";
+
 
     /**
      * 将item 数据中没有完整 title 添加完整信息

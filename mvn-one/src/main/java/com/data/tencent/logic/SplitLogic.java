@@ -91,13 +91,13 @@ public class SplitLogic implements Logic {
             if(info.contains(infoKey.getInfo())){
                 if(Constant.down == infoKey.getExt()){
                     // 对只有 减少  两个字依赖 上下文  还要加负号
-                    return new ItemData(infoKey.getInfo(), Constant.down +""+NumberUtils.getFirstDouble(info)+"",Constant.unclear_type);
+                    return new ItemData(infoKey.getInfo(), Constant.down +""+NumberUtils.getFirstDouble(info)+"",Constant.unclear_type,infoKey.name());
                 }else if(Constant.up == infoKey.getExt()){
                     // 对只有 增加  两个字依赖 上下文
-                    return new ItemData(infoKey.getInfo(), NumberUtils.getFirstDouble(info)+"",Constant.unclear_type);
+                    return new ItemData(infoKey.getInfo(), NumberUtils.getFirstDouble(info)+"",Constant.unclear_type,infoKey.name());
                 }else{
 
-                    return new ItemData(infoKey.getInfo(), NumberUtils.getFirstDouble(info)+"",Constant.clear_type);
+                    return new ItemData(infoKey.getInfo(), NumberUtils.getFirstDouble(info)+"",Constant.clear_type,infoKey.name());
                 }
             }
         }

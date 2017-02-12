@@ -21,22 +21,25 @@ import java.util.Set;
  */
 public class ChangSha {
 
+    /**
+     * 日志类.
+     */
     private static Log logger = LogFactory.getLog(ChangSha.class);
 
     /**
      * 主要逻辑
      * 接入数据
      * 处理数据
-     * 导出数据
-     * @throws Exception
+     * 导出数据.
+     * @throws Exception 无效.
      */
-    public void exe() throws Exception{
+     public final void exe() throws Exception {
 
         String path_tmp = Constant.LOADFILE;
 
         // 从文件中获取 原始的地产数据  -一行
         List<OrgData> orgDataList = access.loadData(path_tmp);
-        if(orgDataList == null||orgDataList.size() == 0){
+        if (orgDataList == null || orgDataList.size() == 0) {
             throw new Exception("数据为空");
         }
         // 时间刻度
@@ -44,40 +47,58 @@ public class ChangSha {
 
         // 将其变成有三个维度的数据  时间，显示名，值
         List<ShowData> show = dealService.convertToShowData(orgDataList);
-        if(show == null||show.size() == 0){
+        if (show == null || show.size() == 0) {
             throw new Exception("数据为空 -");
         }
 
        // 获取分类
-        Set<String> showname_set = dealService.getShowNameSet();
+        Set<String> showname_set = null;
+        showname_set = dealService.getShowNameSet();
         // 生成 serveries
-        String out = dealService.showData(xdata,showname_set,show);
-        if(out == null){
+        String out = dealService.showData(xdata, showname_set, show);
+        if (out == null) {
             throw new Exception("数据为空");
         }
 
 //        String showTitle = StringUtils.join(showname_set,",");
-        logger.info("xdata = "+ StringFormater.formaterTime(xdata));
+        logger.info("xdata = " + StringFormater.formaterTime(xdata));
         logger.info("showtitle = " + StringFormater.titleFormater());
         String selectFalse = StringFormater.selectFalse();
-        String[] outStr = {StringFormater.titleFormater(),StringFormater.formaterTime(xdata),out,selectFalse};
+        String[] outStr = {StringFormater.titleFormater(), StringFormater.formaterTime(xdata), out, selectFalse};
         exportService.export(outStr);
         exportService.writeTojs();
 
     }
 
-
+    /**
+     * 读取文件.
+     */
     private AccessService access;
+    /**
+     * 处理数据.
+     */
     private DealService dealService;
+    /**
+     * 导出成网页.
+     */
     private ExportService exportService;
 
-    public ChangSha(){
+    /**
+     * 函数入口.
+     */
+    public ChangSha() {
+        // 初始化数据
         access = new StaticsLoad();
         dealService = new ChangShaDeal();
         exportService = new WriteData();
     }
 
-    public static void main(String[] args){
+    /**
+     * 函数入口.
+     * @param args 输入参数为空.
+     *             .
+     */
+    public static void main(final String[] args) {
         try {
             new ChangSha().exe();
         } catch (Exception e) {
