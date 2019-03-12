@@ -25,8 +25,8 @@ import java.util.Properties;
 public class MoneySupply {
 
     private final static Logger logger = LoggerFactory.getLogger(MoneySupply.class);
-
-    private final static String propertyName = "D:\\project\\github\\changsha\\mvn-one\\src\\main\\resources" +
+    // E:\project\github\changsha\mvn-one\src\main\resources
+    private final static String propertyName = "E:\\project\\github\\changsha\\mvn-one\\src\\main\\resources" +
             "\\moneySupply.properties";
 
     final Properties prop = new Properties();
@@ -161,47 +161,50 @@ public class MoneySupply {
         List<String> qoqTime = new ArrayList<>();
         List qoqRise = new ArrayList<String>();
         List qoqRisePer = new ArrayList<String>();
+        List nowCap = new ArrayList();
         double lastOne = 0;
         for (int j = 0; j < m2.length; j++) {
             Double[] mps = m2[j];
             for (int i = 0; i < mps.length; i++) {
-
                 Double pre = mps[i];
-
                 if (lastOne != 0) {
                     double qoq = (pre - lastOne) / lastOne;
                     logger.info("环比 {} 年 {} 月 {} {} {} {}", 2015 + j, i + 1, pre, lastOne, df3.format((pre - lastOne)),
                             String.format("%.2f", (qoq * 100)) + "%");
-                    qoqTime.add("'"+(2015 + j) + "年" + (i + 1) + "月'");
+                    qoqTime.add("'" + (2015 + j) + "年" + (i + 1) + "月'");
                     qoqRise.add(df3.format((pre - lastOne)));
                     qoqRisePer.add(String.format("%.2f", (qoq * 100)));
+//                    nowCap.add(lastOne);
+                    nowCap.add(pre);
                     lastOne = 0;
-                    continue;
                 }
-
                 if (i + 1 == mps.length) {
                     // 最后一个
                     lastOne = mps[i];
-                } else {
-                    Double post = mps[i + 1];
-                    double qoq = (post - pre) / pre;
-                    logger.info("环比 {} 年 {} 月 {} {} {} {}", 2015 + j, i + 2, post, pre, df3.format(post - pre),
-                            String.format("%.2f", (qoq * 100)) + "%");
-
-                    qoqTime.add("'"+(2015 + j) + "年" + (i + 2) + "月'");
-                    qoqRise.add(df3.format((post - pre)));
-                    qoqRisePer.add(String.format("%.2f", (qoq * 100)));
-
+                    continue;
                 }
+
+                Double post = mps[i + 1];
+                double qoq = (post - pre) / pre;
+                logger.info("环比 {} 年 {} 月 {} {} {} {}", 2015 + j, i + 2, post, pre, df3.format(post - pre),
+                        String.format("%.2f", (qoq * 100)) + "%");
+
+                qoqTime.add("'" + (2015 + j) + "年" + (i + 2) + "月'");
+                qoqRise.add(df3.format((post - pre)));
+                qoqRisePer.add(String.format("%.2f", (qoq * 100)));
+                nowCap.add(post);
+
             }
         }
-        printQoq(qoqTime,qoqRise,qoqRisePer);
+
+        printQoq(qoqTime, qoqRise, qoqRisePer);
+        logger.info(StringUtils.join(nowCap, ","));
     }
 
-    private void printQoq(List<String> times,List<String> rise,List<String> risePer){
-        logger.info(StringUtils.join(times,","));
-        logger.info(StringUtils.join(rise,","));
-        logger.info(StringUtils.join(risePer,","));
+    private void printQoq(List<String> times, List<String> rise, List<String> risePer) {
+        logger.info(StringUtils.join(times, ","));
+        logger.info(StringUtils.join(rise, ","));
+        logger.info(StringUtils.join(risePer, ","));
     }
 
     private void persite() {
