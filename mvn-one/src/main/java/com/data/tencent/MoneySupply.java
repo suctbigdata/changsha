@@ -2,6 +2,7 @@ package com.data.tencent;
 
 import com.data.tencent.thread.SonThread;
 import com.data.tencent.utils.HtmlContentUtil;
+import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -13,6 +14,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -98,19 +101,21 @@ public class MoneySupply {
     public void compute(Double[][] m2) {
         computeQoQ(m2);
         logger.info("------------------------");
-        computeYoY(m2);
+//        computeYoY(m2);
 
     }
 
     // 同比
     private void computeYoY(Double[][] m2) {
+        String[][] yoyRise = new String[4][12];
+        String[][] yoyRisePer = new String[4][12];
 
         int length = 0;
         for (int j = 0; j < m2.length; j++) {
             length = length > m2[j].length ? length : m2[j].length;
         }
         for (int i = 0; i < length; i++) {
-            for (int j = 0; j < m2.length-1; j++) {
+            for (int j = 0; j < m2.length - 1; j++) {
                 if (m2[j].length <= i) {
 //                    logger.warn("{} {} > {} ", 2016 + j, m2[j].length, i);
                     continue;
@@ -123,12 +128,28 @@ public class MoneySupply {
                 double post = m2[j + 1][i];
                 double gap = post - pre;
                 double yoy = gap / pre;
-                logger.info("同比 {} {} 月 {} {} {} {}",2016+j, i + 1, post, pre, df3.format(gap),
+                logger.info("同比 {} {} 月 {} {} {} {}", 2016 + j, i + 1, post, pre, df3.format(gap),
                         String.format("%.2f", (yoy * 100)) + "%");
+                yoyRise[j][i] = df3.format(gap);
+                yoyRisePer[j][i] = String.format("%.2f", (yoy * 100));
             }
             logger.info("");
         }
+        printYoY(yoyRise, yoyRisePer);
+    }
 
+    private void printYoY(String[][] qoqRise, String[][] qoqRisePer) {
+        int i;
+        for (i = 0; i < qoqRise[0].length; i++) {
+            System.out.print("'" + (i + 1) + "月',");
+        }
+        logger.info("");
+        for (String[] qoqY : qoqRise) {
+            logger.info(StringUtils.join(qoqY, ","));
+        }
+        for (String[] qoqPY : qoqRisePer) {
+            logger.info(StringUtils.join(qoqPY, ","));
+        }
     }
 
     private final DecimalFormat df2 = new DecimalFormat("#.00");
@@ -137,17 +158,23 @@ public class MoneySupply {
 
     // 环比
     private void computeQoQ(Double[][] m2) {
-
+        List<String> qoqTime = new ArrayList<>();
+        List qoqRise = new ArrayList<String>();
+        List qoqRisePer = new ArrayList<String>();
         double lastOne = 0;
-        for (Double[] mps : m2) {
+        for (int j = 0; j < m2.length; j++) {
+            Double[] mps = m2[j];
             for (int i = 0; i < mps.length; i++) {
 
                 Double pre = mps[i];
 
                 if (lastOne != 0) {
-                    double comp = (pre - lastOne) / lastOne;
-                    logger.info("环比 {} 月 {} {} {} {}", i + 1, pre, lastOne, df3.format((pre - lastOne)),
-                            String.format("%.2f", (comp * 100)) + "%");
+                    double qoq = (pre - lastOne) / lastOne;
+                    logger.info("环比 {} 年 {} 月 {} {} {} {}", 2015 + j, i + 1, pre, lastOne, df3.format((pre - lastOne)),
+                            String.format("%.2f", (qoq * 100)) + "%");
+                    qoqTime.add("'"+(2015 + j) + "年" + (i + 1) + "月'");
+                    qoqRise.add(df3.format((pre - lastOne)));
+                    qoqRisePer.add(String.format("%.2f", (qoq * 100)));
                     lastOne = 0;
                     continue;
                 }
@@ -157,14 +184,25 @@ public class MoneySupply {
                     lastOne = mps[i];
                 } else {
                     Double post = mps[i + 1];
-                    double comp = (post - pre) / pre;
-                    logger.info("环比 {} 月 {} {} {} {}", i + 2, post, pre, df3.format(post - pre), String.format("%.2f"
-                            , (comp * 100)) + "%");
+                    double qoq = (post - pre) / pre;
+                    logger.info("环比 {} 年 {} 月 {} {} {} {}", 2015 + j, i + 2, post, pre, df3.format(post - pre),
+                            String.format("%.2f", (qoq * 100)) + "%");
+
+                    qoqTime.add("'"+(2015 + j) + "年" + (i + 2) + "月'");
+                    qoqRise.add(df3.format((post - pre)));
+                    qoqRisePer.add(String.format("%.2f", (qoq * 100)));
+
                 }
             }
         }
+        printQoq(qoqTime,qoqRise,qoqRisePer);
     }
 
+    private void printQoq(List<String> times,List<String> rise,List<String> risePer){
+        logger.info(StringUtils.join(times,","));
+        logger.info(StringUtils.join(rise,","));
+        logger.info(StringUtils.join(risePer,","));
+    }
 
     private void persite() {
 
