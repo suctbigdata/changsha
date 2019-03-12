@@ -1,14 +1,19 @@
 package com.data.tencent;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 
 /**
  * Hello world!
  */
 public class App {
+
+    private final static Logger logger = LoggerFactory.getLogger(App.class);
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-        new App().exe();
+        logger.info("Hello World!");
+//        new App().exe();
     }
 
     public void exe(){
