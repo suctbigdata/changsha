@@ -101,7 +101,7 @@ public class MoneySupply {
     public void compute(Double[][] m2) {
         computeQoQ(m2);
         logger.info("------------------------");
-//        computeYoY(m2);
+        computeYoY(m2);
 
     }
 
